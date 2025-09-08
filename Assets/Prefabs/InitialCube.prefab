@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4575397151927704357}
   - component: {fileID: 6330282153030018830}
   - component: {fileID: 8429101026004776496}
-  - component: {fileID: 6113241727274841205}
   - component: {fileID: -3682152000292296032}
   m_Layer: 0
   m_Name: InitialCube
@@ -121,26 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 4575397151927704357}
---- !u!114 &6113241727274841205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4774611882183711012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f4b2c8bc745e462bb6f517d0ffa24a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _explosionRadius: 10
-  _explosionForce: 700
-  _effect: {fileID: 417761080263594739, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
-  _minCubesSpawned: 2
-  _maxCubesSpawned: 6
-  _neededPercentsChance: 100
-  _maxRandomPercentsChance: 100
-  _cubePrefab: {fileID: 0}
 --- !u!54 &-3682152000292296032
 Rigidbody:
   m_ObjectHideFlags: 0

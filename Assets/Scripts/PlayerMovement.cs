@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private InputReader _inputReader;
+
     [SerializeField] private float _moveSpeed;
     [SerializeField] private Transform _orientation;
 
@@ -18,25 +20,14 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
     }
 
-    private void Update()
-    {
-        UpdateInput();
-    }
-
     private void FixedUpdate()
     {
         MovePlayer();
     }
 
-    private void UpdateInput()
-    {
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
-        _verticalInput = Input.GetAxisRaw("Vertical");
-    }
-
     private void MovePlayer()
     {
-        moveDirection = _orientation.forward * _verticalInput + _orientation.right * _horizontalInput;
+        moveDirection = _orientation.forward * _inputReader.verticalInput + _orientation.right * _inputReader.horizontalInput;
 
         rb.AddForce(moveDirection.normalized * _moveSpeed, ForceMode.Force);
     }

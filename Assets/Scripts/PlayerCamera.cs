@@ -2,28 +2,32 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] private float sensX;    
-    [SerializeField] private float sensY;    
+    [SerializeField] private InputReader _inputReader;
+
+    [SerializeField] private float _sensX;    
+    [SerializeField] private float _sensY;    
+
+    [SerializeField] private float _zRotation;
 
     [SerializeField] private float _minViewBorderX;    
     [SerializeField] private float _maxViewBorderX;    
 
     [SerializeField] private Transform _orientation;
 
-    private float xRotation;
-    private float yRotation;
+    private float _xRotation;
+    private float _yRotation;
 
     private void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float mouseX = _inputReader.mouseAxisX * Time.deltaTime * _sensX;
+        float mouseY =  _inputReader.mouseAxisY * Time.deltaTime * _sensY;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
+        _yRotation += mouseX;
+        _xRotation -= mouseY;
 
-        xRotation = Mathf.Clamp(xRotation, _minViewBorderX, _maxViewBorderX);
+        _xRotation = Mathf.Clamp(_xRotation, _minViewBorderX, _maxViewBorderX);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation,  0);
-        _orientation.rotation = Quaternion.Euler(0, yRotation,  0);
+        transform.rotation = Quaternion.Euler(_xRotation, _yRotation,  _zRotation);
+        _orientation.rotation = Quaternion.Euler(_xRotation, _yRotation,  _zRotation);
     }
 }

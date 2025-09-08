@@ -14,6 +14,8 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private int _maxCubesSpawned;
     [SerializeField] private int _neededPercentsChance;
     [SerializeField] private int _maxRandomPercentsChance;
+    [SerializeField] private int _minRandomPercents;
+    [SerializeField] private int _smallerVariablesCubeCoefficient;
     [SerializeField] private GameObject _cubePrefab;
 
     private CubeSpawner _newCubeSpawner;
@@ -25,10 +27,10 @@ public class CubeSpawner : MonoBehaviour
 
     private void SpawnCubes()
     {
-        _cubePrefab = gameObject;
+        print("SSSSSS");
+        _cubePrefab = transform.parent.gameObject;
 
-        int _ourPercentsChance = Random.Range(0, _maxRandomPercentsChance+1);
-        print($"Шансы на разделение: {_ourPercentsChance} должно быть < {_neededPercentsChance}");
+        int _ourPercentsChance = Random.Range(_minRandomPercents, _maxRandomPercentsChance+1);
 
         int cubesCount = Random.Range(_minCubesSpawned, _maxCubesSpawned+1);
 
@@ -40,8 +42,8 @@ public class CubeSpawner : MonoBehaviour
 
                 _newCubeSpawner = newCube.GetComponent<CubeSpawner>();
         
-                _newCubeSpawner._neededPercentsChance = _neededPercentsChance / 2;
-                newCube.transform.localScale = new Vector3(transform.localScale.x / 2, transform.localScale.y / 2, transform.localScale.z / 2 ); 
+                _newCubeSpawner._neededPercentsChance = _neededPercentsChance / _smallerVariablesCubeCoefficient;
+                newCube.transform.localScale = new Vector3(transform.localScale.x / _smallerVariablesCubeCoefficient, transform.localScale.y / _smallerVariablesCubeCoefficient, transform.localScale.z / _smallerVariablesCubeCoefficient ); 
             }
 
             Explode();
