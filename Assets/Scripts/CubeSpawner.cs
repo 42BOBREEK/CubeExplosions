@@ -10,6 +10,7 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private ParticleSystem _effect;
 
     [Header("SpawningParameters")]
+    [SerializeField] private PlayerRaycaster _playerRaycaster;
     [SerializeField] private int _minCubesSpawned;
     [SerializeField] private int _maxCubesSpawned;
     [SerializeField] private int _neededPercentsChance;
@@ -18,46 +19,50 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private int _smallerVariablesCubeCoefficient;
     [SerializeField] private GameObject _cubePrefab;
 
-    private CubeSpawner _newCubeSpawner;
+    private Cube _newCubeScript;
 
-    private void OnMouseUpAsButton()
+    private void OnEnable()
     {
-        SpawnCubes();
+        _playerRaycaster.CubeFound += SpawnCubes;
+    }
+
+    private void OnDisable()
+    {
+        _playerRaycaster.CubeFound -= SpawnCubes;
     }
 
     private void SpawnCubes()
     {
-        print("SSSSSS");
-        _cubePrefab = transform.parent.gameObject;
+        _cubePrefab = _playerRaycaster.foundCube;
 
         int _ourPercentsChance = Random.Range(_minRandomPercents, _maxRandomPercentsChance+1);
 
         int cubesCount = Random.Range(_minCubesSpawned, _maxCubesSpawned+1);
 
-        if(_ourPercentsChance < _neededPercentsChance)
+        if(_ourPercentsChance < _cubePrefab.GetComponent<Cube>().neededPercentsChance)
         {
             for(int i = 0; i < cubesCount; i++)
             {
-                GameObject newCube = Instantiate(_cubePrefab, transform.position, transform.rotation);
+                GameObject newCube = Instantiate(_cubePrefab, _cubePrefab.transform.position, _cubePrefab.transform.rotation);
 
-                _newCubeSpawner = newCube.GetComponent<CubeSpawner>();
+                _newCubeScript = newCube.GetComponent<Cube>();
         
-                _newCubeSpawner._neededPercentsChance = _neededPercentsChance / _smallerVariablesCubeCoefficient;
-                newCube.transform.localScale = new Vector3(transform.localScale.x / _smallerVariablesCubeCoefficient, transform.localScale.y / _smallerVariablesCubeCoefficient, transform.localScale.z / _smallerVariablesCubeCoefficient ); 
+                _newCubeScript.DecreaseSpawnChances(_smallerVariablesCubeCoefficient);
+                newCube.transform.localScale = new Vector3(_cubePrefab.transform.localScale.x / _smallerVariablesCubeCoefficient, _cubePrefab.transform.localScale.y / _smallerVariablesCubeCoefficient, _cubePrefab.transform.localScale.z / _smallerVariablesCubeCoefficient); 
             }
 
             Explode();
         }
 
-        Destroy(gameObject);
+        Destroy(_cubePrefab);
     }
 
     private void Explode()
     {
-        Instantiate(_effect, transform.position, transform.rotation);
+        Instantiate(_effect, _cubePrefab.transform.position, _cubePrefab.transform.rotation);
 
         foreach(Rigidbody explodableObject in GetExplodableObjects())
-            explodableObject.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+            explodableObject.AddExplosionForce(_explosionForce, _cubePrefab.transform.position, _explosionRadius);
     }
 
     private List<Rigidbody> GetExplodableObjects()

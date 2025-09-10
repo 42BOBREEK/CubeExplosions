@@ -17,6 +17,12 @@ public class PlayerCamera : MonoBehaviour
     private float _xRotation;
     private float _yRotation;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     private void Update()
     {
         float mouseX = _inputReader.mouseAxisX * Time.deltaTime * _sensX;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class InputReader : MonoBehaviour
 {
@@ -13,8 +14,16 @@ public class InputReader : MonoBehaviour
 
     public float horizontalInput => _horizontalInput;
     public float verticalInput => _verticalInput;
-    void Update()
+
+    public event Action MouseClicked;
+
+    private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            MouseClicked?.Invoke();
+        }
+
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
         
