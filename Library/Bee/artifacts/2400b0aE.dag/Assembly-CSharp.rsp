@@ -351,6 +351,7 @@
 "Assets/Scripts/Cube.cs"
 "Assets/Scripts/CubeColorChanger.cs"
 "Assets/Scripts/CubeSpawner.cs"
+"Assets/Scripts/Exploder.cs"
 "Assets/Scripts/InputReader.cs"
 "Assets/Scripts/PlayerCamera.cs"
 "Assets/Scripts/PlayerMovement.cs"

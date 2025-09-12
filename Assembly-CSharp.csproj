@@ -67,6 +67,7 @@
     <Compile Include="Assets/Scripts/CubeColorChanger.cs" />
     <Compile Include="Assets/Scripts/PlayerCamera.cs" />
     <Compile Include="Assets/Scripts/Cube.cs" />
+    <Compile Include="Assets/Scripts/Exploder.cs" />
     <Compile Include="Assets/Scripts/CubeSpawner.cs" />
     <Compile Include="Assets/Scripts/PlayerMovement.cs" />
     <Compile Include="Assets/Scripts/PlayerRaycaster.cs" />
