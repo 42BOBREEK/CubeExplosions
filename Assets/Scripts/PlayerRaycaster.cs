@@ -5,7 +5,7 @@ public class PlayerRaycaster : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     
-    public event Action<GameObject> CubeFound;
+    public event Action<Cube> CubeFound;
     
     private void OnEnable()
     {
@@ -30,7 +30,7 @@ public class PlayerRaycaster : MonoBehaviour
         {
             if(hit.collider.gameObject.tag == "Cube")
             {
-                CubeFound?.Invoke(hit.collider.gameObject);
+                CubeFound?.Invoke(hit.collider.gameObject.GetComponent<Cube>());
             }
         }
     }

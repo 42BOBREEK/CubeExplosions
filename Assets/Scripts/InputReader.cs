@@ -9,11 +9,11 @@ public class InputReader : MonoBehaviour
     private float _horizontalInput;
     private float _verticalInput;
 
-    public float mouseAxisX => _mouseAxisX;
-    public float mouseAxisY => _mouseAxisY;
+    public float MouseAxisX => _mouseAxisX;
+    public float MouseAxisY => _mouseAxisY;
 
-    public float horizontalInput => _horizontalInput;
-    public float verticalInput => _verticalInput;
+    public float HorizontalInput => _horizontalInput;
+    public float VerticalInput => _verticalInput;
 
     public event Action MouseClicked;
 

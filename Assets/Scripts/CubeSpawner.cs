@@ -10,7 +10,7 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private ParticleSystem _effect;
 
     [Header("SpawningParameters")]
-    [SerializeField] private PlayerRaycaster _playerRaycaster;
+    [SerializeField] private CubesController _controller;
     [SerializeField] private int _minCubesSpawned;
     [SerializeField] private int _maxCubesSpawned;
     [SerializeField] private int _neededPercentsChance;
@@ -20,29 +20,29 @@ public class CubeSpawner : MonoBehaviour
 
     private Cube _newCubeScript;
 
-    public event Action<GameObject> CubeSpawned;
+    public event Action<Cube> CubeSpawned;
 
     private void OnEnable()
     {
-        _playerRaycaster.CubeFound += SpawnCubes;
+        _controller.CubeFound += SpawnCubes;
     }
 
     private void OnDisable()
     {
-        _playerRaycaster.CubeFound -= SpawnCubes;
+        _controller.CubeFound -= SpawnCubes;
     }
 
-    private void SpawnCubes(GameObject newCube)
+    private void SpawnCubes(Cube newCube)
     {
         int _ourPercentsChance = UnityEngine.Random.Range(_minRandomPercents, _maxRandomPercentsChance+1);
 
         int cubesCount = UnityEngine.Random.Range(_minCubesSpawned, _maxCubesSpawned+1);
 
-        if(_ourPercentsChance < newCube.GetComponent<Cube>().neededPercentsChance)
+        if(_ourPercentsChance < newCube.neededPercentsChance)
         {
             for(int i = 0; i < cubesCount; i++)
             {
-                GameObject createdCube = Instantiate(newCube, newCube.transform.position, newCube.transform.rotation);
+                GameObject createdCube = Instantiate(newCube.gameObject, newCube.gameObject.transform.position, newCube.gameObject.transform.rotation);
 
                 _newCubeScript = createdCube.GetComponent<Cube>();
         
@@ -53,6 +53,6 @@ public class CubeSpawner : MonoBehaviour
             CubeSpawned?.Invoke(newCube);
         }
 
-        Destroy(newCube);
+        Destroy(newCube.gameObject);
     }
 }

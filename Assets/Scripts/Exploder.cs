@@ -6,35 +6,35 @@ public class Exploder : MonoBehaviour
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
     [SerializeField] private ParticleSystem _effect;
-    [SerializeField] private CubeSpawner _cubeSpawner;
+    [SerializeField] private CubesController _controller;
 
-    void OnEnable()
+    private void OnEnable()
     {
-        _cubeSpawner.CubeSpawned += Explode;
+        _controller.CubeSpawned += Explode;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        _cubeSpawner.CubeSpawned += Explode;
+        _controller.CubeSpawned += Explode;
     }
 
-    private void Explode(GameObject cube)
+    private void Explode(Cube cube)
     {
-        Instantiate(_effect, cube.transform.position, cube.transform.rotation);
+        Instantiate(_effect, cube.gameObject.transform.position, cube.gameObject.transform.rotation);
 
-        foreach(Rigidbody explodableObject in GetExplodableObjects())
-            explodableObject.AddExplosionForce(_explosionForce, cube.transform.position, _explosionRadius);
-     }
+        foreach(Rigidbody explodableObject in GetExplodableObjects(cube.gameObject))
+            explodableObject.AddExplosionForce(_explosionForce, cube.gameObject.transform.position, _explosionRadius);
+    }
   
-      private List<Rigidbody> GetExplodableObjects()
-      {
-          Collider[] hits = Physics.OverlapSphere(transform.position, _explosionRadius);
-  
-          List<Rigidbody> objects = new();
-   
-          foreach(Collider hit in hits)
-              if(hit.attachedRigidbody != null)
-                  objects.Add(hit.attachedRigidbody);
-           return objects;
-       }
+    private List<Rigidbody> GetExplodableObjects(GameObject explodableObject)
+    {
+        Collider[] hits = Physics.OverlapSphere(explodableObject.transform.position, _explosionRadius);
+
+        List<Rigidbody> objects = new();
+ 
+        foreach(Collider hit in hits)
+            if(hit.attachedRigidbody != null)
+                objects.Add(hit.attachedRigidbody);
+        return objects;
+    }
 }
