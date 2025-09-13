@@ -38,7 +38,7 @@ public class CubeSpawner : MonoBehaviour
 
         int cubesCount = UnityEngine.Random.Range(_minCubesSpawned, _maxCubesSpawned+1);
 
-        if(_ourPercentsChance < newCube.neededPercentsChance)
+        if(_ourPercentsChance < newCube.NeededPercentsChance)
         {
             for(int i = 0; i < cubesCount; i++)
             {

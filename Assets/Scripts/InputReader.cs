@@ -3,31 +3,32 @@ using System;
 
 public class InputReader : MonoBehaviour
 {
-    private float _mouseAxisX;
-    private float _mouseAxisY;
+    private const string HorizontalAxis = "Horizontal";
+    private const string VerticalAxis = "Vertical";
+    private const string MouseXAxis = "Mouse X";
+    private const string MouseYAxis = "Mouse Y";
 
-    private float _horizontalInput;
-    private float _verticalInput;
+    [SerializeField] private int _mouseButtonNumber;
 
-    public float MouseAxisX => _mouseAxisX;
-    public float MouseAxisY => _mouseAxisY;
+    public float MouseAxisX { get; private set; }
+    public float MouseAxisY { get; private set; }
 
-    public float HorizontalInput => _horizontalInput;
-    public float VerticalInput => _verticalInput;
+    public float HorizontalInput { get; private set; }
+    public float VerticalInput { get; private set; }
 
     public event Action MouseClicked;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(_mouseButtonNumber))
         {
             MouseClicked?.Invoke();
         }
 
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
-        _verticalInput = Input.GetAxisRaw("Vertical");
+        HorizontalInput = Input.GetAxisRaw(HorizontalAxis);
+        VerticalInput = Input.GetAxisRaw(VerticalAxis);
         
-        _mouseAxisX = Input.GetAxisRaw("Mouse X"); 
-        _mouseAxisY = Input.GetAxisRaw("Mouse Y"); 
+        MouseAxisX = Input.GetAxisRaw(MouseXAxis); 
+        MouseAxisY = Input.GetAxisRaw(MouseYAxis); 
     }
 }
